@@ -16,37 +16,43 @@ function Home() {
 
   // Fetch data for dropdowns
   useEffect(() => {
-    const fetchOrganisations = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/data/organisation'); // Replace with your endpoint
-        setOrganisations(response.data);
-      } catch (error) {
-        console.error('Error fetching organisations:', error);
+        // Retry logic: Add retry attempts for each request
+        const fetchWithRetry = async (url, retries = 3, delay = 100) => {
+          try {
+            const response = await axios.get(url, {
+              headers: { 'Content-Type': 'application/json' }
+            });
+            return response.data;
+          } catch (error) {
+            if (retries > 0) {
+              await new Promise(resolve => setTimeout(resolve, delay));
+              return fetchWithRetry(url, retries - 1, delay);
+            } else {
+              throw error;
+            }
+          }
+        };
+  
+        // Fetch data with retries
+        const orgData = await fetchWithRetry('http://localhost:8080/data/organisation');
+        // console.log(orgData)
+        setOrganisations(orgData);
+        
+        const domainData = await fetchWithRetry('http://localhost:8080/data/domain');
+        setDomains(domainData);
+        
+        const specialisationData = await fetchWithRetry('http://localhost:8080/data/specialisation');
+        setSpecialisations(specialisationData);
+  
+      } 
+      catch (error) {
+        // console.error('Error fetching data:', error);
       }
     };
-
-    const fetchDomains = async () => {
-      try {
-        const response = await axios.get('http://localhost:8080/data/domain'); // Replace with your endpoint
-        setDomains(response.data);
-      } catch (error) {
-        console.error('Error fetching domains:', error);
-      }
-    };
-
-    const fetchSpecialisations = async () => {
-      try {
-        const response = await axios.get('http://localhost:8080/data/specialisation'); // Replace with your endpoint
-        setSpecialisations(response.data);
-      } catch (error) {
-        console.error('Error fetching specialisations:', error);
-      }
-    };
-
-    // Fetch all data
-    fetchOrganisations();
-    fetchDomains();
-    fetchSpecialisations();
+  
+    fetchData();
   }, []);
 
   const handleSubmit = async (e) => {
