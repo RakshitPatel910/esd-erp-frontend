@@ -71,12 +71,24 @@ function Home() {
     console.log(payload);
 
     try{
-      const response = axios.post('http://localhost:8080/placement', payload);
+      const response = await axios.post('http://localhost:8080/placement', payload);
+
+      console.log(response);
+
+      if (response.status === 200) {
+        // Show success alert if the request was successful
+        alert('Placement offer added successfully!');
+      } else {
+        // Handle unexpected response status if needed
+        alert('There was an issue adding the placement offer.');
+      }
 
       console.log("placement offer added successfully!!");
     }
     catch (error) {
       console.error(error);
+
+      alert('An error occurred while adding the placement offer. Please try again.');
     }
 
     // fetch('/api/submit', {
@@ -108,108 +120,110 @@ function Home() {
   };
 
   return (
-    <div className="container">
-      <h1>Job Placement Form</h1>
-      <form onSubmit={handleSubmit}>
-        {/* Organisation Dropdown */}
-        <label>
-          Organisation:
-          <select value={organisationId} onChange={(e) => setOrganisationId(e.target.value)} required>
-            <option value="">Select Organisation</option>
-            {organisations.map((org) => (
-              <option key={org.id} value={org.id}>
-                {org.name}
-              </option>
-            ))}
-          </select>
-        </label>
+    <>
+      <div className="container">
+        <h1>Job Placement Form</h1>
+        <form onSubmit={handleSubmit}>
+          {/* Organisation Dropdown */}
+          <label>
+            Organisation:
+            <select value={organisationId} onChange={(e) => setOrganisationId(e.target.value)} required>
+              <option value="">Select Organisation</option>
+              {organisations.map((org) => (
+                <option key={org.id} value={org.id}>
+                  {org.name}
+                </option>
+              ))}
+            </select>
+          </label>
 
-        {/* Profile Input */}
-        <label>
-          Profile:
-          <input
-            type="text"
-            value={profile}
-            onChange={(e) => setProfile(e.target.value)}
-            placeholder="Enter profile"
-            required
-          />
-        </label>
+          {/* Profile Input */}
+          <label>
+            Profile:
+            <input
+              type="text"
+              value={profile}
+              onChange={(e) => setProfile(e.target.value)}
+              placeholder="Enter profile"
+              required
+              />
+          </label>
 
-        {/* Description Input */}
-        <label>
-          Description:
-          <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            placeholder="Enter description"
-            required
-          />
-        </label>
+          {/* Description Input */}
+          <label>
+            Description:
+            <textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="Enter description"
+              required
+              />
+          </label>
 
-        {/* Min Grade Input */}
-        <label>
-          Minimum Grade:
-          <input
-            type="number"
-            step="0.01"
-            value={minGrade}
-            onChange={(e) => setMinGrade(e.target.value)}
-            placeholder="Enter minimum grade"
-            required
-          />
-        </label>
+          {/* Min Grade Input */}
+          <label>
+            Minimum Grade:
+            <input
+              type="number"
+              step="0.01"
+              value={minGrade}
+              onChange={(e) => setMinGrade(e.target.value)}
+              placeholder="Enter minimum grade"
+              required
+              />
+          </label>
 
-        {/* Intake Input */}
-        <label>
-          Intake:
-          <input
-            type="number"
-            value={intake}
-            onChange={(e) => setIntake(e.target.value)}
-            placeholder="Enter intake"
-            required
-          />
-        </label>
+          {/* Intake Input */}
+          <label>
+            Intake:
+            <input
+              type="number"
+              value={intake}
+              onChange={(e) => setIntake(e.target.value)}
+              placeholder="Enter intake"
+              required
+              />
+          </label>
 
-        {/* Domain Dropdown (Multiple Select) */}
-        <label>
-          Domains:
-          <select
-            multiple
-            value={domainIds}
-            onChange={handleDomainChange} // Handle multiple selections
-            required
-          >
-            {domains.map((domain) => (
-              <option key={domain.id} value={domain.id}>
-                {domain.name}
-              </option>
-            ))}
-          </select>
-        </label>
+          {/* Domain Dropdown (Multiple Select) */}
+          <label>
+            Domains:
+            <select
+              multiple
+              value={domainIds}
+              onChange={handleDomainChange} // Handle multiple selections
+              required
+              >
+              {domains.map((domain) => (
+                <option key={domain.id} value={domain.id}>
+                  {domain.name}
+                </option>
+              ))}
+            </select>
+          </label>
 
-        {/* Specialisation Dropdown (Multiple Select) */}
-        <label>
-          Specialisations:
-          <select
-            multiple
-            value={specialisationIds}
-            onChange={handleSpecialisationChange} // Handle multiple selections
-            required
-          >
-            {specialisations.map((spec) => (
-              <option key={spec.id} value={spec.id}>
-                {spec.name}
-              </option>
-            ))}
-          </select>
-        </label>
+          {/* Specialisation Dropdown (Multiple Select) */}
+          <label>
+            Specialisations:
+            <select
+              multiple
+              value={specialisationIds}
+              onChange={handleSpecialisationChange} // Handle multiple selections
+              required
+              >
+              {specialisations.map((spec) => (
+                <option key={spec.id} value={spec.id}>
+                  {spec.name}
+                </option>
+              ))}
+            </select>
+          </label>
 
-        {/* Submit Button */}
-        <button type="submit">Submit</button>
-      </form>
-    </div>
+          {/* Submit Button */}
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+    </>
   );
 }
 
