@@ -23,8 +23,8 @@ function Navbar() {
 
       <div className="navbar-links">
         {/* Other links */}
-        <a href="/home">Home</a>
-        <a href="/profile">Profile</a>
+        {/* <a href="/home">Home</a>
+        <a href="/profile">Profile</a> */}
 
         {/* Logout Button */}
         <button onClick={handleLogout} className="logout-button">Logout</button>

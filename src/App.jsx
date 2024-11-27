@@ -47,20 +47,22 @@ function App() {
 
   return(
     <BrowserRouter>
-      {/* <Navbar/> */}
-      <Routes>
-        <Route
-          path='/'
-          element={ isAuthenticated ? (
-                      <Home/>
-                    ) : (
-                      // <Navigate to='/login' replace/>  
-                      <Login onLogin={handleOnLogin} />
-                    )
+      <Navbar/>
+      <div className='home-container'>
+        <Routes>
+          <Route
+            path='/'
+            element={ isAuthenticated ? (
+              <Home/>
+            ) : (
+              // <Navigate to='/login' replace/>  
+              <Login onLogin={handleOnLogin} />
+            )
           }
-        />
-        {/* <Route path='/login' element={<Login onLogin={handleOnLogin} />}/> */}
-      </Routes>
+          />
+          {/* <Route path='/login' element={<Login onLogin={handleOnLogin} />}/> */}
+        </Routes>
+      </div>
     </BrowserRouter>
   )
 }

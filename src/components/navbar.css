@@ -12,7 +12,7 @@
     align-items: center; /* Vertically center items */
     background-color: #333;
     padding: 10px 20px; /* Space inside navbar */
-    position: fixed; /* Keep navbar fixed at the top */
+    position: fixed; 
     top: 0;
     left: 0;
     width: 100%; /* Full width */
@@ -30,6 +30,7 @@
   .navbar-links {
     display: flex;
     align-items: center;
+    margin: 0 100px;
   }
   
   .navbar-links a {

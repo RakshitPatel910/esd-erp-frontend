@@ -1,6 +1,73 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import Select from 'react-select';
+
 import './home.css'
+
+
+
+
+const customStyles = {
+  control: (provided, state) => ({
+    ...provided,
+    backgroundColor: '#12121d',
+    border: state.isFocused ? '1px solid #5a5af0' : '1px solid #444',
+    boxShadow: state.isFocused ? '0 0 8px rgba(90, 90, 240, 0.6)' : 'none',
+    borderRadius: '5px',
+    padding: '2px',
+    color: '#fff',
+  }),
+  menu: (provided) => ({
+    ...provided,
+    backgroundColor: '#1a1a28',
+    border: '1px solid #5a5af0',
+    borderRadius: '5px',
+    boxShadow: '0 0 8px rgba(90, 90, 240, 0.6)',
+    zIndex: 10,
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    backgroundColor: state.isSelected
+      ? '#5a5af0'
+      : state.isFocused
+      ? '#4a4ad0'
+      : '#12121d',
+    color: '#fff',
+    padding: '10px',
+    cursor: 'pointer',
+  }),
+  multiValue: (provided) => ({
+    ...provided,
+    backgroundColor: '#5a5af0',
+    borderRadius: '3px',
+    color: '#fff',
+  }),
+  multiValueLabel: (provided) => ({
+    ...provided,
+    color: '#fff',
+  }),
+  multiValueRemove: (provided) => ({
+    ...provided,
+    color: '#fff',
+    ':hover': {
+      backgroundColor: '#4a4ad0',
+      color: '#fff',
+    },
+  }),
+  placeholder: (provided) => ({
+    ...provided,
+    color: '#cfcfcf',
+  }),
+  input: (provided) => ({
+    ...provided,
+    color: '#fff',
+  }),
+};
+
+
+
+
+
 
 function Home() {
   const [organisationId, setOrganisationId] = useState('');
@@ -13,6 +80,9 @@ function Home() {
   const [organisations, setOrganisations] = useState([]);
   const [domains, setDomains] = useState([]);
   const [specialisations, setSpecialisations] = useState([]);
+
+  const domainOptions = domains.map((domain) => ({ value: domain.id, label: domain.name }));
+  const specialisationOptions = specialisations.map((spec) => ({ value: spec.id, label: spec.name }));
 
   // Fetch data for dropdowns
   useEffect(() => {
@@ -186,7 +256,7 @@ function Home() {
           </label>
 
           {/* Domain Dropdown (Multiple Select) */}
-          <label>
+          {/* <label>
             Domains:
             <select
               multiple
@@ -200,10 +270,10 @@ function Home() {
                 </option>
               ))}
             </select>
-          </label>
+          </label> */}
 
           {/* Specialisation Dropdown (Multiple Select) */}
-          <label>
+          {/* <label>
             Specialisations:
             <select
               multiple
@@ -217,7 +287,79 @@ function Home() {
                 </option>
               ))}
             </select>
-          </label>
+          </label> */}
+
+{/* <label>
+  Domains:
+  <select
+    multiple
+    value={domainIds}
+    onChange={handleDomainChange} // Handle multiple selections
+    required
+  >
+    {domains.map((domain) => (
+      <option key={domain.id} value={domain.id}>
+        {domain.name}
+      </option>
+    ))}
+  </select>
+</label> */}
+
+{/* Specialisation Dropdown (Multiple Select) */}
+{/* <label>
+  Specialisations:
+  <select
+    multiple
+    value={specialisationIds}
+    onChange={handleSpecialisationChange} // Handle multiple selections
+    required
+  >
+    {specialisations.map((spec) => (
+      <option key={spec.id} value={spec.id}>
+        {spec.name}
+      </option>
+    ))}
+  </select>
+</label> */}
+
+{/* <CustomDropdown
+  options={domains.map((domain) => ({ value: domain.id, label: domain.name }))}
+  selectedValues={domainIds}
+  setSelectedValues={setDomainIds}
+  placeholder="Select domains"
+/>
+
+<CustomDropdown
+  options={specialisations.map((spec) => ({ value: spec.id, label: spec.name }))}
+  selectedValues={specialisationIds}
+  setSelectedValues={setSpecialisationIds}
+  placeholder="Select specialisations"
+/> */}
+
+<label>
+        Domains:
+        <Select
+          options={domainOptions}
+          isMulti
+          onChange={(selected) => setDomainIds(selected.map((option) => option.value))}
+          value={domainOptions.filter((option) => domainIds.includes(option.value))}
+          placeholder="Select domains"
+          styles={customStyles}
+        />
+      </label>
+
+      {/* Specialisations Dropdown */}
+      <label>
+        Specialisations:
+        <Select
+          options={specialisationOptions}
+          isMulti
+          onChange={(selected) => setSpecialisationIds(selected.map((option) => option.value))}
+          value={specialisationOptions.filter((option) => specialisationIds.includes(option.value))}
+          placeholder="Select specialisations"
+          styles={customStyles}
+        />
+      </label>
 
           {/* Submit Button */}
           <button type="submit">Submit</button>
