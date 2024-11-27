@@ -47,7 +47,7 @@ function App() {
 
   return(
     <BrowserRouter>
-      <Navbar/>
+      <Navbar isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated}/>
       <div className='home-container'>
         <Routes>
           <Route

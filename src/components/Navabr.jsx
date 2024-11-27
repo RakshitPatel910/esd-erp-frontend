@@ -1,18 +1,16 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate hook
-
+import { useNavigate } from 'react-router-dom';
 import './navbar.css'
 
-function Navbar() {
-  const navigate = useNavigate();  // Initialize the navigate function
+function Navbar({ isAuthenticated, setIsAuthenticated }) {
+  const navigate = useNavigate();
 
-  // Handle logout
   const handleLogout = () => {
-    // Clear authentication data (for example, JWT token from localStorage)
-    localStorage.removeItem('authToken');  // Assuming the token is stored in localStorage
+    localStorage.removeItem('authToken'); 
 
-    // Redirect to login page after logout
-    navigate('/login');
+    setIsAuthenticated(false);
+
+    navigate('/');
   };
 
   return (
@@ -22,12 +20,12 @@ function Navbar() {
       </div>
 
       <div className="navbar-links">
-        {/* Other links */}
-        {/* <a href="/home">Home</a>
-        <a href="/profile">Profile</a> */}
-
-        {/* Logout Button */}
-        <button onClick={handleLogout} className="logout-button">Logout</button>
+        {
+          isAuthenticated ? 
+            <button onClick={() => handleLogout()} className="logout-button">Logout</button>
+            :
+            <></>
+        }
       </div>
     </nav>
   );

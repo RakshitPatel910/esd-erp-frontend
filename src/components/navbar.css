@@ -1,85 +1,71 @@
-/* Reset default margin/padding */
-/* * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-   */
-  /* Navbar container styles */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333;
+  padding: 10px 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.navbar-brand h2 {
+  color: white;
+  margin: 0;
+  font-size: 24px;
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  margin: 0 100px;
+}
+
+.navbar-links a {
+  color: white;
+  text-decoration: none;
+  margin-left: 20px;
+  font-size: 16px;
+}
+
+.navbar-links a:hover {
+  color: #f44336;
+}
+
+.logout-button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  margin-left: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #d32f2f;
+}
+
+.content {
+  margin-top: 70px;
+}
+
+@media screen and (max-width: 768px) {
   .navbar {
-    display: flex;
-    justify-content: space-between; /* Distribute items evenly */
-    align-items: center; /* Vertically center items */
-    background-color: #333;
-    padding: 10px 20px; /* Space inside navbar */
-    position: fixed; 
-    top: 0;
-    left: 0;
-    width: 100%; /* Full width */
-    z-index: 1000; /* Ensure navbar stays on top */
+    flex-direction: column;
+    text-align: center;
   }
-  
-  /* Navbar brand (app name/logo) */
-  .navbar-brand h2 {
-    color: white;
-    margin: 0;
-    font-size: 24px;
-  }
-  
-  /* Navbar links */
+
   .navbar-links {
-    display: flex;
-    align-items: center;
-    margin: 0 100px;
+    flex-direction: column;
+    margin-top: 10px;
   }
-  
+
   .navbar-links a {
-    color: white;
-    text-decoration: none;
-    margin-left: 20px; /* Space between links */
-    font-size: 16px;
+    margin: 10px 0;
   }
-  
-  .navbar-links a:hover {
-    color: #f44336;
-  }
-  
-  /* Logout button styling */
-  .logout-button {
-    background-color: #f44336; /* Red */
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    margin-left: 20px;
-    cursor: pointer;
-    font-size: 16px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .logout-button:hover {
-    background-color: #d32f2f;
-  }
-  
-  /* Add margin-top to content below navbar */
-  .content {
-    margin-top: 70px; /* This should be at least the height of the navbar to avoid overlap */
-  }
-  
-  /* Navbar links (if the screen is small, center the items) */
-  @media screen and (max-width: 768px) {
-    .navbar {
-      flex-direction: column; /* Stack navbar items vertically */
-      text-align: center; /* Center text in smaller screens */
-    }
-  
-    .navbar-links {
-      flex-direction: column;
-      margin-top: 10px;
-    }
-  
-    .navbar-links a {
-      margin: 10px 0; /* Space between links vertically */
-    }
-  }
-  
+}

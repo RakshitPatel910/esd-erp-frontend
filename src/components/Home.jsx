@@ -73,8 +73,8 @@ function Home() {
   const [organisationId, setOrganisationId] = useState('');
   const [profile, setProfile] = useState('');
   const [description, setDescription] = useState('');
-  const [minGrade, setMinGrade] = useState('');
-  const [intake, setIntake] = useState('');
+  const [minGrade, setMinGrade] = useState(0);
+  const [intake, setIntake] = useState(1);
   const [domainIds, setDomainIds] = useState([]);
   const [specialisationIds, setSpecialisationIds] = useState([]);
   const [organisations, setOrganisations] = useState([]);
@@ -235,7 +235,9 @@ function Home() {
             Minimum Grade:
             <input
               type="number"
-              step="0.01"
+              step="0.1"
+              min={0}
+              max={4}
               value={minGrade}
               onChange={(e) => setMinGrade(e.target.value)}
               placeholder="Enter minimum grade"
@@ -248,6 +250,7 @@ function Home() {
             Intake:
             <input
               type="number"
+              min={1}
               value={intake}
               onChange={(e) => setIntake(e.target.value)}
               placeholder="Enter intake"
