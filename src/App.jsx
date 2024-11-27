@@ -53,7 +53,7 @@ function App() {
           <Route
             path='/'
             element={ isAuthenticated ? (
-              <Home/>
+              <Home isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated}/>
             ) : (
               // <Navigate to='/login' replace/>  
               <Login onLogin={handleOnLogin} />

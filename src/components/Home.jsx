@@ -69,7 +69,7 @@ const customStyles = {
 
 
 
-function Home() {
+function Home({ isAuthenticated, setIsAuthenticated }) {
   const [organisationId, setOrganisationId] = useState('');
   const [profile, setProfile] = useState('');
   const [description, setDescription] = useState('');
@@ -80,6 +80,7 @@ function Home() {
   const [organisations, setOrganisations] = useState([]);
   const [domains, setDomains] = useState([]);
   const [specialisations, setSpecialisations] = useState([]);
+  const [authToken, setAuthToken] = useState('');
 
   const domainOptions = domains.map((domain) => ({ value: domain.id, label: domain.name }));
   const specialisationOptions = specialisations.map((spec) => ({ value: spec.id, label: spec.name }));
@@ -123,6 +124,8 @@ function Home() {
     };
   
     fetchData();
+  
+    setAuthToken( localStorage.getItem('authToken') || "" );
   }, []);
 
   const handleSubmit = async (e) => {
@@ -141,7 +144,9 @@ function Home() {
     console.log(payload);
 
     try{
-      const response = await axios.post('http://localhost:8080/placement', payload);
+      const response = await axios.post('http://localhost:8080/placement', payload, {headers:{
+        'Authorization': authToken
+      }});
 
       console.log(response);
 
@@ -157,6 +162,18 @@ function Home() {
     }
     catch (error) {
       console.error(error);
+
+      const message = error.response.data.message;
+
+      console.log(message);
+
+      if( message.toLowerCase().includes("jwt expired") ){
+        localStorage.removeItem('authToken'); 
+
+        setIsAuthenticated(false);
+
+        navigate('/');
+      }
 
       alert('An error occurred while adding the placement offer. Please try again.');
     }
